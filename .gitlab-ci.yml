@@ -1,0 +1,22 @@
+stages: [preparation, build, test]
+
+variables:
+  APP_NAME: "samplerunning"
+  APP_PORT: "5050"
+
+preparation:
+  stage: preparation
+  script:
+    - docker stop "$APP_NAME" || true
+    - docker rm   "$APP_NAME" || true
+
+build_job:
+  stage: build
+  script:
+    - chmod +x ./sample-app.sh || true
+    - bash ./sample-app.sh
+
+test_job:
+  stage: test
+  script:
+    - curl -fsS "http://localhost:5050/" | grep "You are calling me from"
