@@ -1,14 +1,4 @@
-stages: [preparation, build, test]
-
-variables:
-  APP_NAME: "samplerunning"
-  APP_PORT: "5050"
-
-preparation:
-  stage: preparation
-  script:
-    - docker stop "$APP_NAME" || true
-    - docker rm   "$APP_NAME" || true
+stages: [build, test]
 
 build_job:
   stage: build
@@ -19,4 +9,4 @@ build_job:
 test_job:
   stage: test
   script:
-    - curl -fsS "http://localhost:5050/" | grep "You are calling me from"
+    - curl "http://localhost:5050/" | grep "You are calling me from"
